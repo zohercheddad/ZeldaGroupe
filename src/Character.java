@@ -57,7 +57,7 @@ public abstract class Character extends GameObject {
      * dx, dy : translation demandée (ex: +3 droite, -3 gauche, etc.)
      * rotation : 0, 90, 180, 270 (orientation du sprite)
      * gos : liste de tous les GameObject du monde (murs, items, monstres...)
-     *
+
      * Stratégie :
      * 1) On applique le mouvement.
      * 2) On teste les collisions.
@@ -75,7 +75,7 @@ public abstract class Character extends GameObject {
         double demiW = demiLargeurCollision();
         double demiH = demiHauteurCollision();
 
-        // 2) Vérifier collisions + 3) Repositionner au bord + 4) Appeler le comportement spécifique
+           // 2) Vérifier collisions + 3) Repositionner au bord + 4) Appeler le comportement spécifique
         for (GameObject go : gos) {
             if (go == this) continue;        // on ne se collisionne pas avec soi-même
             if (!go.isEnable()) continue;    // un objet désactivé ne bloque pas

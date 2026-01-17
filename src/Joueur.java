@@ -9,7 +9,7 @@ public class Joueur extends Character {
     // -------------------------
     // Etat du joueur
     // -------------------------
-    private int live = 10;     // 10 par défaut
+    private int live = 10000;     // 10 par défaut
     private int points = 0;    // score
 
     // -------------------------

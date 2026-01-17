@@ -3,22 +3,26 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class Coin extends Item {
+    private static final double COIN_SIZE = 22; //
 
     public Coin(double x, double y) {
-        super(x, y, 30, 30, 1);
+        super(x, y, COIN_SIZE, COIN_SIZE, 1);
     }
 
     @Override
     public void createToken(double x, double y) {
+        //new Circle(centerX, centerY, radius);
+        double rayon = getWidth() / 2.0;
+        double centerX = rayon;
+        double centerY = rayon;
 
-        double r = getWidth() / 2;
-
-        Circle corps = new Circle(r, r, r);
+        System.out.println("diametre=" + getWidth() + " rayon=" + rayon);
+        Circle corps = new Circle(centerX, centerY , rayon );
         corps.setFill(Color.GOLD);
         corps.setStroke(Color.DARKGOLDENROD);
         corps.setStrokeWidth(3);
 
-        Circle relief = new Circle(r, r, r - 5);
+        Circle relief = new Circle(centerX, centerY , rayon - 5);
         relief.setFill(Color.GOLDENROD);
         relief.setOpacity(0.6);
 

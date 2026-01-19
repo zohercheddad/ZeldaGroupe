@@ -1,3 +1,7 @@
+/***
+ *
+ */
+
 import java.util.List;
 
 /**
@@ -53,6 +57,10 @@ public abstract class Character extends GameObject {
     // =========================
     // Déplacement + résolution des collisions (logique "prof")
     // =========================
+
+
+
+
     /**
      * dx, dy : translation demandée (ex: +3 droite, -3 gauche, etc.)
      * rotation : 0, 90, 180, 270 (orientation du sprite)
@@ -143,3 +151,175 @@ public abstract class Character extends GameObject {
     // Chaque type de personnage définit son comportement en cas de collision.
     public abstract void onCollideWith(GameObject go);
 }
+/***
+ * import java.util.List;
+ *
+ * public abstract class Character extends GameObject {
+ *
+ *     protected int vitesse;
+ *
+ *
+ *
+ *     public Character(double x, double y, double width, double height, int vitesse) {
+ *         super(x, y, width, height);
+ *         this.vitesse = vitesse;
+ *     }
+ *
+ *     public int getVitesse() {
+ *         return vitesse;
+ *     }
+ *
+ *     // ===== COLLISIONS  =====
+ *
+ *     public boolean collideWith(GameObject go) {
+ *         return collideBottom(go) || collideLeft(go) || collideRight(go) || collideTop(go);
+ *     }
+ *
+ *     public boolean collideLeft(GameObject elem) {
+ *         double xGauchePerso = getXLeft();
+ *         boolean result = getY() >= elem.getYTop()
+ *                 && getY() <= elem.getYBottom()
+ *                 && xGauchePerso <= elem.getXRight()
+ *                 && xGauchePerso >= elem.getXLeft();
+ *         return elem.isEnable() && result;
+ *     }
+ *
+ *     public boolean collideRight(GameObject elem) {
+ *         boolean result = getY() >= elem.getYTop()
+ *                 && getY() <= elem.getYBottom()
+ *                 && getXRight() >= elem.getXLeft()
+ *                 && getXRight() <= elem.getXRight();
+ *         return elem.isEnable() && result;
+ *     }
+ *
+ *     public boolean collideTop(GameObject elem) {
+ *         boolean result = getX() >= elem.getXLeft()
+ *                 && getX() <= elem.getXRight()
+ *                 && getYTop() <= elem.getYBottom()
+ *                 && getYTop() >= elem.getYTop();
+ *         return elem.isEnable() && result;
+ *     }
+ *
+ *     public boolean collideBottom(GameObject elem) {
+ *         boolean result = getX() >= elem.getXLeft()
+ *                 && getX() <= elem.getXRight()
+ *                 && getYBottom() >= elem.getYTop()
+ *                 && getYBottom() <= elem.getYBottom();
+ *         return elem.isEnable() && result;
+ *     }
+ *
+ *     // ===== DÉPLACEMENT CENTRALISÉ (OBLIGATOIRE) =====
+ *
+ *     public void move(double dx, double dy, double rotation, List<GameObject> gos) {
+ *         double oldX = getX();
+ *         double oldY = getY();
+ *
+ *         setRotation(rotation);
+ *         setX(oldX + dx);
+ *         setY(oldY + dy);
+ *
+ *         for (GameObject go : gos) {
+ *             if (go != this && collideWith(go)) {
+ *                 setX(oldX);
+ *                 setY(oldY);
+ *                 onCollideWith(go);
+ *                 break;
+ *             }
+ *         }
+ *     }
+ *     public void repositionAbout(GameObject go) {
+ *         setX(getX() - 10);
+ *         setY(getY() - 10);
+ *     }
+ *
+ *     // ===== COMPORTEMENT SPÉCIFIQUE =====
+ *     public abstract void onCollideWith(GameObject go);
+ * }
+ */
+
+/***
+ * import java.util.List;
+ *
+ * public abstract class Character extends GameObject {
+ *
+ *     private int vitesse;
+ *
+ *     public Character(double x, double y, double width, double height, int vitesse) {
+ *         super(x, y, width, height);
+ *         this.vitesse = vitesse;
+ *     }
+ *
+ *     public int getVitesse() {
+ *         return vitesse;
+ *     }
+ *
+ *     // ===== COLLISIONS (code du PDF) =====
+ *
+ *     public boolean collideLeft(GameObject elem) {
+ *         double xGauchePerso = getXLeft();
+ *         boolean result = getY() >= elem.getYTop()
+ *                 && getY() <= elem.getYBottom()
+ *                 && xGauchePerso <= elem.getXRight()
+ *                 && xGauchePerso >= elem.getXLeft();
+ *         return elem.isEnable() && result;
+ *     }
+ *
+ *     public boolean collideRight(GameObject elem) {
+ *         boolean result = getY() >= elem.getYTop()
+ *                 && getY() <= elem.getYBottom()
+ *                 && getXRight() >= elem.getXLeft()
+ *                 && getXRight() <= elem.getXRight();
+ *         return elem.isEnable() && result;
+ *     }
+ *
+ *     public boolean collideTop(GameObject elem) {
+ *         boolean result = getX() >= elem.getXLeft()
+ *                 && getX() <= elem.getXRight()
+ *                 && getYTop() <= elem.getYBottom()
+ *                 && getYTop() >= elem.getYTop();
+ *         return elem.isEnable() && result;
+ *     }
+ *
+ *     public boolean collideBottom(GameObject elem) {
+ *         boolean result = getX() >= elem.getXLeft()
+ *                 && getX() <= elem.getXRight()
+ *                 && getYBottom() >= elem.getYTop()
+ *                 && getYBottom() <= elem.getYBottom();
+ *         return elem.isEnable() && result;
+ *     }
+ *
+ *     public boolean collideWith(GameObject e) {
+ *         if (!e.isEnable()) return false;
+ *
+ *         return getXLeft()   < e.getXRight()
+ *                 && getXRight()  > e.getXLeft()
+ *                 && getYTop()    < e.getYBottom()
+ *                 && getYBottom() > e.getYTop();
+ *     }
+ *
+ *     // ===== DÉPLACEMENT CENTRALISÉ =====
+ *
+ *     public void move(double dx, double dy, double rotation, List<GameObject> gos) {
+ *         double oldX = getX();
+ *         double oldY = getY();
+ *
+ *         setRotation(rotation);
+ *         setX(oldX + dx);
+ *         setY(oldY + dy);
+ *
+ *         for (GameObject go : gos) {
+ *             if (go != this && collideWith(go)) {
+ *                 setX(oldX);
+ *                 setY(oldY);
+ *                 onCollideWith(go);
+ *                 break;
+ *             }
+ *         }
+ *     }
+ *
+ *     @Override
+ *     public abstract void createToken(double x, double y);
+ *
+ *     public abstract void onCollideWith(GameObject go);
+ * }
+ */
